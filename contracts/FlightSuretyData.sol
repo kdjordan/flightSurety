@@ -13,6 +13,9 @@ contract FlightSuretyData {
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
 
+    uint8 private NUM_AIRLINES = 4;
+    uint private AIRLINE_FUDING = 10 ether;
+    
     /********************************************************************************************/
     /*                                       EVENT DEFINITIONS                                  */
     /********************************************************************************************/
@@ -82,12 +85,12 @@ contract FlightSuretyData {
     */    
     function setOperatingStatus
                             (
-                                bool mode
+                                bool _mode
                             ) 
                             external
                             requireContractOwner 
     {
-        operational = mode;
+        operational = _mode;
     }
 
     /********************************************************************************************/
@@ -99,12 +102,10 @@ contract FlightSuretyData {
     *      Can only be called from FlightSuretyApp contract
     *
     */   
-    function registerAirline
-                            (   
-                            )
-                            external
-                            pure
+    function registerAirline (address _airline, string _airlineName) external 
+    requireIsOperational 
     {
+        
     }
 
 

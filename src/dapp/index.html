@@ -7,6 +7,7 @@
     <title>FlightSurety</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
 </head>
 
 <body>
@@ -21,13 +22,29 @@
 
     <main class="container">
 
-        <div id="display-wrapper" class="top-20">
+        <div id="display-wrapper">
+            <div class="row flex-spread">
+                <btn class="btn btn-primary ctrl-btn" id="submit-oracle">Check Operations</btn>
+                <btn class="btn btn-primary ctrl-btn" onClick="changeView('#register_airline')" id="create_airline">Register Airline</btn>
+                <btn class="btn btn-primary ctrl-btn" id="submit-flight">Register Flight</btn>
+                <btn class="btn btn-primary ctrl-btn" id="submit-insurance">Buy Insurance</btn>
+            </div>
         </div>
-        <div class="row top-20">
+        <div class="row top-20" id="status">
             <label class="form">Flight</label> <input type="text" id="flight-number"> <btn class="btn btn-primary" id="submit-oracle">Submit to Oracles</btn>
         </div>
+        <div class="row top-20" id="register">
+            <label class="form">Flight</label> <input type="text" id="flight-number"> <btn class="btn btn-primary" id="submit-oracle">Register Airline</btn>
+        </div>
+        <div class="row top-20" id="flight">
+            <label class="form">Flight</label> <input type="text" id="flight-number"> <btn class="btn btn-primary" id="submit-oracle">Register Flight</btn>
+        </div>
+        <div class="row top-20" id="insurance">
+            <label class="form">Flight</label> <input type="text" id="flight-number"> <btn class="btn btn-primary" id="submit-oracle">Buy Insurance</btn>
+        </div>
     </main>
-
+    <!-- UI SCRIPT -->
+    <script src="./controls.js"></script>
 </body>
 
 </html>

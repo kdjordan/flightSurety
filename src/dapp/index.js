@@ -7,9 +7,8 @@ import './flightsurety.css';
 (async() => {
 
     let result = null;
-
     let contract = new Contract('localhost', () => {
-
+        console.log('loaded')
         // Read transaction
         contract.isOperational((error, result) => {
             console.log(error,result);
@@ -26,6 +25,27 @@ import './flightsurety.css';
             });
         })
     
+    });
+    //create airline
+    DOM.elid('create_airline').addEventListener('click', () => {
+        console.log('register airline tab')
+        // let name = DOM.elid('name_airline').value;
+        // let address = DOM.elid('addr_airline').value;
+
+        // if(name != '' && address != ''){
+           
+        //     contract.registerAirline(address, name, (error, result) => {
+        //         display('Airline Registered', 'Airline '+name+' was registered', [ { label: 'Registration:', error: error,  value: 'Success - registered. ' } ]);
+        //         if(result){
+        //             $('#registered_airlines').append('<option value="' + address + '">' + address + '</option>');
+        //             $('#registered_airlines').show();
+        //         }
+               
+        //     });
+        // }else{
+        //     alert("Please, fill all empty spaces in Create Airline Section!");
+        // }
+        
     });
     
 

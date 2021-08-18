@@ -40,3 +40,15 @@ label.form {
 input {
     margin-right: 30px;
 }
+
+.mb-10 {
+    margin-bottom: 20px;
+}
+
+.flex-spread {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
