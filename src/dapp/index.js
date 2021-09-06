@@ -18,11 +18,31 @@ import './flightsurety.css';
     
 
         // User-submitted transaction
-        DOM.elid('submit-oracle').addEventListener('click', () => {
-            let flight = DOM.elid('flight-number').value;
-            // Write transaction
-            contract.fetchFlightStatus(flight, (error, result) => {
-                display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+        // DOM.elid('submit-oracle').addEventListener('click', () => {
+        //     let flight = DOM.elid('flight-number').value;
+        //     // Write transaction
+        //     contract.fetchFlightStatus(flight, (error, result) => {
+        //         display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+        //     });
+        // })
+
+         // Register Airline
+         DOM.elid('submit_register_airline_btn').addEventListener('click', () => {
+            let registerAirlineAddress = DOM.elid('register_airline_address').value;
+            console.log(registerAirlineAddress)
+            
+            contract.registerAirline(registerAirlineAddress, (error, result) => {
+                console.log(error,result);
+            });
+        })
+
+         // Get Registered Airline
+         DOM.elid('get-registered-airlines-btn').addEventListener('click', () => {
+            let registerAirlineAddress = DOM.elid('registered-airlines-address').value;
+            console.log(registerAirlineAddress)
+            
+            contract.getRegisteredAirlines((error, result) => {
+                console.log('index', error,result);
             });
         })
     

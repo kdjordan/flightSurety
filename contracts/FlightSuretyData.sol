@@ -12,6 +12,27 @@ contract FlightSuretyData {
 
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
+    uint8 private totalAirlines;
+
+    struct Airline {
+        bool isRegistered;
+        bool isFunded;
+    }
+
+     mapping(address => Airline) private airlines;
+     //can't iterate througn mappings so we'll keep an array reference
+     //https://coursetro.com/posts/code/102/Solidity-Mappings-&-Structs-Tutorial
+     address[] public registeredAirlines;
+     address[] public registeredFundedAirlines;
+
+
+     // Flight status codees
+    uint8 private constant STATUS_CODE_UNKNOWN = 0;
+    uint8 private constant STATUS_CODE_ON_TIME = 10;
+    uint8 private constant STATUS_CODE_LATE_AIRLINE = 20;
+    uint8 private constant STATUS_CODE_LATE_WEATHER = 30;
+    uint8 private constant STATUS_CODE_LATE_TECHNICAL = 40;
+    uint8 private constant STATUS_CODE_LATE_OTHER = 50;
 
     /********************************************************************************************/
     /*                                       EVENT DEFINITIONS                                  */
@@ -22,12 +43,10 @@ contract FlightSuretyData {
     * @dev Constructor
     *      The deploying account becomes contractOwner
     */
-    constructor
-                                (
-                                ) 
-                                public 
-    {
+    constructor() public {
         contractOwner = msg.sender;
+        //register first airline on deployment to contract owner per project instructions
+        registerFirstAirline(contractOwner);
     }
 
     /********************************************************************************************/
@@ -66,29 +85,34 @@ contract FlightSuretyData {
     *
     * @return A bool that is the current operating status
     */      
-    function isOperational() 
-                            public 
-                            view 
-                            returns(bool) 
-    {
+    function isOperational() public view returns(bool) {
         return operational;
     }
-
 
     /**
     * @dev Sets contract operations on/off
     *
     * When operational mode is disabled, all write transactions except for this one will fail
     */    
-    function setOperatingStatus
-                            (
-                                bool mode
-                            ) 
-                            external
-                            requireContractOwner 
-    {
+    function setOperatingStatus(bool mode) external requireContractOwner {
         operational = mode;
     }
+
+     function registerFirstAirline(address firstAirline) internal requireContractOwner
+    {
+        airlines[firstAirline].isRegistered = true;
+        airlines[firstAirline].isFunded = true; 
+        registeredAirlines.push(firstAirline);
+        registeredFundedAirlines.push(firstAirline);
+    }
+
+     function getRegisteredAirlines() public view returns(address[]) {
+        return registeredAirlines;
+    }
+
+
+
+
 
     /********************************************************************************************/
     /*                                     SMART CONTRACT FUNCTIONS                             */

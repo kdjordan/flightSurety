@@ -40,17 +40,41 @@ export default class Contract {
             .call({ from: self.owner}, callback);
     }
 
-    fetchFlightStatus(flight, callback) {
+    registerAirline(airline) {
         let self = this;
         let payload = {
-            airline: self.airlines[0],
-            flight: flight,
-            timestamp: Math.floor(Date.now() / 1000)
-        } 
-        self.flightSuretyApp.methods
-            .fetchFlightStatus(payload.airline, payload.flight, payload.timestamp)
-            .send({ from: self.owner}, (error, result) => {
-                callback(error, payload);
-            });
+          airline: airline
+        }
+        
+        self.flightSuretyApp.methods.registerAirline(airline).send({from: self.owner}, (error, result) => {
+          if(error) {
+            console.log(error);
+          } 
+          else {
+            alert('Registered: ' + payload.airline);
+            console.log('Registered: ' + payload.airline);
+            console.log(payload);
+          }    
+        });
+      }
+
+    // fetchFlightStatus(flight, callback) {
+    //     let self = this;
+    //     let payload = {
+    //         airline: self.airlines[0],
+    //         flight: flight,
+    //         timestamp: Math.floor(Date.now() / 1000)
+    //     } 
+    //     self.flightSuretyApp.methods
+    //         .fetchFlightStatus(payload.airline, payload.flight, payload.timestamp)
+    //         .send({ from: self.owner}, (error, result) => {
+    //             callback(error, payload);
+    //         });
+    // }
+
+    async getRegisteredAirlines() {
+        let self = this;
+        let res =  await self.flightSuretyApp.methods.getRegisteredAirlines().send({ from: self.owner});
+        console.log('contract', res)
     }
 }
