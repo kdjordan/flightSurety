@@ -104,6 +104,7 @@ contract FlightSuretyData {
         airlines[firstAirline].isFunded = true; 
         registeredAirlines.push(firstAirline);
         registeredFundedAirlines.push(firstAirline);
+        totalAirlines++;
     }
 
      function getRegisteredAirlines() public view returns(address[]) {

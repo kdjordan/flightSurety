@@ -24,7 +24,7 @@
         <div id="display-wrapper" class="top-20">
         </div>
 
-        <div style="border: 1px solid #FFFFFF; padding:20px;">
+        <div style="padding:20px;">
             <!-- <h4>ADMIN</h4>
             <div style="font-size:10px;">&nbsp;</div>
             <label>AUTHORIZE CALLER</label>
@@ -33,13 +33,33 @@
                 <div style="font-size:5px;">&nbsp;</div>
                 <button class="btn-sm btn-primary" id="authorize-caller-btn" style="cursor:pointer;">AUTHORIZE</button>
             </div> -->
-            <div style="font-size:5px;">&nbsp;</div>
-            <label>REGISTERED AIRLINES</label>
+            <h2 class="section_header">AIRLINE FUNCTIONS</h2>
+            <div style="font-size:10px;">&nbsp;</div>
+            <h5>REGISTER AIRLINE</h5>
             <div class="form-group mb-2">
-                <textarea class="form-control" id="registered-airlines-address" rows="5" readonly></textarea>
+                <input type="text" class="form-control" id="airline_address" placeholder="Enter address to register" value="">
+                <br />
+                <button class="btn-sm btn-primary" id="submit-register-airline-btn" style="cursor:pointer;">REGISTER</button>
+                <br />
+            </div>
+            <br />
+            <h5>SUBMIT FUNDING FOR AIRLINE: COST = 10 ETH</h5>
+            <div class="form-group mb-2">
+                <select id="airlines_need_funding" class="w-100"></select>
+                <!-- <input type="text" class="form-control" id="submit-funding-airline" placeholder="Enter address to register" value=""> -->
+                <br />
+                <br />
+                <button class="btn-sm btn-primary" id="submit-funding-btn" style="cursor:pointer;">SBUMIT</button>
+                <br />
+            </div>
+            <br />
+            <h5>OPERATIONAL AIRLINES</h5>
+            <div class="form-group mb-2">
+                <textarea class="form-control" id="operational-airlines-addresses" rows="5" readonly></textarea>
                 <br />
                 <button class="btn-sm btn-primary" id="get-registered-airlines-btn" style="cursor:pointer;">SHOW AIRLINES</button >
             </div>
+            <div style="font-size:5px;">&nbsp;</div>
             <!-- <div style="font-size:5px;">&nbsp;</div>
             <label>GET CONTRACT BALANCE</label>
             <div class="form-group mb-2">
@@ -58,29 +78,7 @@
         </div>
 
         <div style="border: 1px solid #FFFFFF; padding:20px; margin-top:20px;">
-            <h4>AIRLINE</h4>
-            <div style="font-size:10px;">&nbsp;</div>
-            <label>
-                REGISTER AIRLINE
-            </label>
-            <div class="form-group mb-2">
-                <input type="text" class="form-control" id="register_airline_address" placeholder="Enter address to register" value="">
-                <div style="font-size:5px;">&nbsp;</div>
-                <button class="btn-sm btn-primary" id="submit_register_airline_btn" style="cursor:pointer;">REGISTER</button>
-                <div style="font-size:5px;">&nbsp;</div>
-            </div>
-            <div style="font-size:5px;">&nbsp;</div>
-            <label>
-                SUBMIT FUNDING
-            </label>
-            <div class="form-group mb-2">
-                <input type="text" class="form-control" id="submit-funding-airline" placeholder="Enter address to register" value="">
-                <div style="font-size:5px;">&nbsp;</div>
-                <input type="text" class="form-control" id="submit-funding-field" placeholder="Enter 10 ether" value="">
-                <div style="font-size:5px;">&nbsp;</div>
-                <button class="btn-sm btn-primary" id="submit-funding-btn" style="cursor:pointer;">SBUMIT</button>
-                <div style="font-size:5px;">&nbsp;</div>
-            </div>
+           
         </div> 
 
         <!-- <div style="border: 1px solid #FFFFFF; padding:20px; margin-top:20px;">

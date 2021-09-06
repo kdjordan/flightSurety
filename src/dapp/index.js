@@ -15,6 +15,10 @@ import './flightsurety.css';
             console.log(error,result);
             display('Operational Status', 'Check if contract is operational', [ { label: 'Operational Status', error: error, value: result} ]);
         });
+
+        contract.airlines.forEach(airline => {
+            airlineDisplaySelect(airline, DOM.elid("airlines_need_funding"));
+        });  
     
 
         // User-submitted transaction
@@ -27,28 +31,37 @@ import './flightsurety.css';
         // })
 
          // Register Airline
-         DOM.elid('submit_register_airline_btn').addEventListener('click', () => {
-            let registerAirlineAddress = DOM.elid('register_airline_address').value;
-            console.log(registerAirlineAddress)
+        //  DOM.elid('submit_register_airline_btn').addEventListener('click', () => {
+        //     let registerAirlineAddress = DOM.elid('register_airline_address').value;
+        //     console.log(registerAirlineAddress)
             
-            contract.registerAirline(registerAirlineAddress, (error, result) => {
-                console.log(error,result);
-            });
-        })
+        //     contract.registerAirline(registerAirlineAddress, (error, result) => {
+        //         console.log(error,result);
+        //     });
+        // })
 
-         // Get Registered Airline
-         DOM.elid('get-registered-airlines-btn').addEventListener('click', () => {
-            let registerAirlineAddress = DOM.elid('registered-airlines-address').value;
-            console.log(registerAirlineAddress)
+         // Get registered Airlines
+        //  DOM.elid('get-registered-airlines-btn').addEventListener('click', () => {
+        //     let registerAirlineAddress = DOM.elid('registered-airlines-address').value;
+        //     console.log(registerAirlineAddress)
             
-            contract.getRegisteredAirlines((error, result) => {
-                console.log('index', error,result);
-            });
-        })
-    
-    });
-    
+        //     let registerdAirlines = contract.getRegisteredAirlines((error, result) => {
+        //         console.log(error,result);
+        //         console.log('registeredAirlines', registerdAirlines);
+        //     });
+        // })
 
+         // Get operational Airlines
+         //operational Airlines are both registered and funded
+        // contract.getOperationalAirlines((error, result) => {
+        //     console.log(error, result)
+        // })
+        // .then((result) => {
+        //     DOM.elid('operational-airlines-addresses').value = result;
+        // });
+
+
+    })
 })();
 
 
@@ -64,12 +77,11 @@ function display(title, description, results) {
         section.appendChild(row);
     })
     displayDiv.append(section);
-
 }
 
-
-
-
-
-
-
+function airlineDisplaySelect(airlineAddress, parentEl) {
+    let el = document.createElement("option");
+    el.text = airlineAddress;
+    el.value = airlineAddress;
+    parentEl.add(el);
+}
