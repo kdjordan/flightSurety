@@ -16,10 +16,9 @@ import './flightsurety.css';
             display('Operational Status', 'Check if contract is operational', [ { label: 'Operational Status', error: error, value: result} ]);
         });
 
-        contract.airlines.forEach(airline => {
-            airlineDisplaySelect(airline, DOM.elid("airlines_need_funding"));
-        });  
-    
+        contract.registeredAirlines.forEach(airline => {
+            displayRegisteredAirline(airline, DOM.elid('registeredAirline'))
+        })
 
         // User-submitted transaction
         // DOM.elid('submit-oracle').addEventListener('click', () => {
@@ -49,6 +48,10 @@ import './flightsurety.css';
         //         console.log(error,result);
         //         console.log('registeredAirlines', registerdAirlines);
         //     });
+
+        //     registerdAirlines.forEach(airline => {
+        //         airlineDisplaySelect(airline, DOM.elid("airlines_need_funding"));
+        //     });  
         // })
 
          // Get operational Airlines
@@ -79,7 +82,7 @@ function display(title, description, results) {
     displayDiv.append(section);
 }
 
-function airlineDisplaySelect(airlineAddress, parentEl) {
+function displayRegisteredAirline(airlineAddress, parentEl) {
     let el = document.createElement("option");
     el.text = airlineAddress;
     el.value = airlineAddress;

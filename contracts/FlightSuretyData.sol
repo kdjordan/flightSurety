@@ -22,8 +22,8 @@ contract FlightSuretyData {
      mapping(address => Airline) private airlines;
      //can't iterate througn mappings so we'll keep an array reference
      //https://coursetro.com/posts/code/102/Solidity-Mappings-&-Structs-Tutorial
-     address[] public registeredAirlines;
-     address[] public registeredFundedAirlines;
+     address[] private registeredAirlines;
+     address[] private registeredFundedAirlines;
 
 
      // Flight status codees
