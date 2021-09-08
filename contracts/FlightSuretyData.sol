@@ -12,7 +12,6 @@ contract FlightSuretyData {
 
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
-    uint8 private totalAirlines;
 
     struct Airline {
         bool isRegistered;
@@ -21,11 +20,13 @@ contract FlightSuretyData {
 
      mapping(address => Airline) private airlines;
      //can't iterate througn mappings so we'll keep an array reference
+     //registered Airlines need funding
+     //operational Airlines are registered && funded
      //https://coursetro.com/posts/code/102/Solidity-Mappings-&-Structs-Tutorial
      address[] private registeredAirlines;
-     address[] private registeredFundedAirlines;
+     address[] private operationalAirlines;
 
-
+    
      // Flight status codees
     uint8 private constant STATUS_CODE_UNKNOWN = 0;
     uint8 private constant STATUS_CODE_ON_TIME = 10;
@@ -98,17 +99,23 @@ contract FlightSuretyData {
         operational = mode;
     }
 
+    function isAirlineRegistered(address airline) public view returns(bool answer) {
+        return airlines[airline].isRegistered;
+    }
+
      function registerFirstAirline(address firstAirline) internal requireContractOwner
     {
         airlines[firstAirline].isRegistered = true;
         airlines[firstAirline].isFunded = true; 
-        registeredAirlines.push(firstAirline);
-        registeredFundedAirlines.push(firstAirline);
-        totalAirlines++;
+        operationalAirlines.push(firstAirline);
     }
 
-     function getRegisteredAirlines() public view returns(address[]) {
+    function getRegisteredAirlines() public view returns(address[]) {
         return registeredAirlines;
+    }
+
+    function getOperationalAirlines() public view returns(address[]) {
+        return operationalAirlines;
     }
 
 
@@ -124,12 +131,16 @@ contract FlightSuretyData {
     *      Can only be called from FlightSuretyApp contract
     *
     */   
-    function registerAirline
-                            (   
-                            )
-                            external
-                            pure
-    {
+    function registerAirline(address airline) external requireIsOperational {
+        registeredAirlines.push(airline);
+    }
+
+    function fundAirline(address airline, uint amount) external requireIsOperational returns(bool) {
+        require(airlines[airline].isRegistered = true, "Airline not registered");
+        airlines[airline].isRegistered = true;
+        airlines[airline].isFunded = true; 
+        operationalAirlines.push(airline);
+        return true;
     }
 
 

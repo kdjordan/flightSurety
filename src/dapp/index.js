@@ -19,6 +19,10 @@ import './flightsurety.css';
         contract.registeredAirlines.forEach(airline => {
             displayRegisteredAirline(airline, DOM.elid('registeredAirline'))
         })
+        
+        let opAirlines = contract.operationalAirlines
+        DOM.elid('operational-airlines').value = opAirlines;
+        
 
         // User-submitted transaction
         // DOM.elid('submit-oracle').addEventListener('click', () => {
@@ -30,15 +34,24 @@ import './flightsurety.css';
         // })
 
          // Register Airline
-        //  DOM.elid('submit_register_airline_btn').addEventListener('click', () => {
-        //     let registerAirlineAddress = DOM.elid('register_airline_address').value;
-        //     console.log(registerAirlineAddress)
+         DOM.elid('register-airline-btn').addEventListener('click', () => {
+            let registerAirlineAddress = DOM.elid('airline_address').value;
+            console.log(registerAirlineAddress)
             
-        //     contract.registerAirline(registerAirlineAddress, (error, result) => {
-        //         console.log(error,result);
-        //     });
-        // })
+            contract.registerAirline(registerAirlineAddress, (error, result) => {
+                console.log(error,result);
+            });
+        })
 
+        //Fund Airline
+        DOM.elid('fund-airline-btn').addEventListener('click', () => {
+            let airlineAddress = DOM.elid('registeredAirline').value;
+            console.log('funding', airlineAddress)
+
+            contract.fundAirline(airlineAddress, (error, result) => {
+                console.log(error,result);
+            });
+        })
          // Get registered Airlines
         //  DOM.elid('get-registered-airlines-btn').addEventListener('click', () => {
         //     let registerAirlineAddress = DOM.elid('registered-airlines-address').value;

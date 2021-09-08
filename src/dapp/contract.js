@@ -22,9 +22,9 @@ export default class Contract {
 
             let counter = 1;
 
-            this.registeredAirlines = await this.flightSuretyApp.methods.getRegisteredAirlines().call({ from: self.owner});
-            console.log('here', typeof(this.registeredAirlines))
-
+            this.registeredAirlines = await this.getRegisteredAirlines();
+            this.operationalAirlines = await this.getOperationalAirlines();
+            
             while(this.passengers.length < 5) {
                 this.passengers.push(accts[counter++]);
             }
@@ -42,41 +42,41 @@ export default class Contract {
     async getRegisteredAirlines() {
         console.log('calling getRegisteredAirlines')
         let self = this;
-        console.log('owner', self.owner)
+        // console.log('owner', self.owner)
         let res = await self.flightSuretyApp.methods.getRegisteredAirlines().call({ from: self.owner});
-        this.registeredAirlines.push(res)
+        return res
     }
 
     //getOperationalAirlines = airlines that are registered and funded
-    async getRegisteredAirlines() {
+    async getOperationalAirlines() {
         console.log('calling getOperationalAirlines')
         let self = this;
-        console.log('owner', self.owner)
+        // console.log('owner', self.owner)
         let res = await self.flightSuretyApp.methods.getOperationalAirlines().call({ from: self.owner});
-        this.operationalAirlines.push(res)
+        return res;
     }
 
 
-    //user submitted calls
+    //register an airline
+    async registerAirline(airline, callback) {
+        console.log('registering airline', airline)
+        let self = this
+        await self.flightSuretyApp.methods.registerAirline(airline).send({from: self.owner}, (error, result) => {
+            location.reload();
+            callback(error, result)
+        });
+      }
 
-    // registerAirline(airline) {
-    //     console.log('registering airline')
-    //     let self = this;
-    //     let payload = {
-    //       airline: airline
-    //     }
-        
-    //     self.flightSuretyApp.methods.registerAirline(airline).send({from: self.owner}, (error, result) => {
-    //       if(error) {
-    //         console.log(error);
-    //       } 
-    //       else {
-    //         alert('Registered: ' + payload.airline);
-    //         console.log('Registered: ' + payload.airline);
-    //         console.log(payload);
-    //       }    
-    //     });
-    //   }
+      async fundAirline(airline, callback) {
+          console.log('funding airline', airline)
+          let self = this
+          const fund = self.web3.utils.toWei('10', "ether"); 
+          await self.flightSuretyApp.methods.fundAirline(airline).send({from: self.owner, value:fund}, (error, result) => {
+            // location.reload();
+            callback(error, result)
+        });
+
+      }
 
     // fetchFlightStatus(flight, callback) {
     //     let self = this;
@@ -92,20 +92,4 @@ export default class Contract {
     //         });
     // }
 
-    // async getRegisteredAirlines() {
-    //     console.log('calling in contracts')
-    //     let self = this;
-    //     console.log('owner', self.owner)
-    //     let res = await self.flightSuretyApp.methods.getRegisteredAirlines().call({ from: self.owner});
-    //     console.log('result', typeof(res[0]))
-    //     let arr = new Array;
-    //     arr.push(res[0])
-    //     return arr
-    // }
-
-    // async getOperationalAirlines() {
-    //     let self = this;
-    //     let res = await self.flightSuretyApp.methods.getOperationalAirlines().call({ from: self.owner});
-    //     return 'aifbakjfba;k';
-    // }
 }

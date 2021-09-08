@@ -30,6 +30,9 @@ contract FlightSuretyApp {
     }
     mapping(bytes32 => Flight) private flights;
 
+    //payment constants
+    uint256 constant AIRLINE_FUND_FEE = 10 ether;
+
  
     /********************************************************************************************/
     /*                                       FUNCTION MODIFIERS                                 */
@@ -90,14 +93,20 @@ contract FlightSuretyApp {
     * @dev Add an airline to the registration queue
     *
     */   
-    function registerAirline
-                            (   
-                            )
-                            external
-                            pure
-                            returns(bool success, uint256 votes)
-    {
-        return (success, 0);
+    function registerAirline(address airline) external requireIsOperational returns(bool, uint256) {
+        //check to see if airline is alreadt registered
+        require(!flightSuretyData.isAirlineRegistered(airline), "Airline is already registered");
+        //if not register airline
+        flightSuretyData.registerAirline(airline);
+        return (true, 0);
+    }
+
+    function fundAirline(address airline) payable external requireIsOperational returns (bool) {
+        //check to see if airline is alreadt registered
+        require(msg.value == AIRLINE_FUND_FEE, "Payment is not enough");
+        //if not register airline
+        bool success = flightSuretyData.fundAirline(airline, msg.value);
+        return success;
     }
 
 
@@ -154,6 +163,10 @@ contract FlightSuretyApp {
 
     function getRegisteredAirlines() external view returns(address[]){
         return flightSuretyData.getRegisteredAirlines();
+    }
+
+    function getOperationalAirlines() external view returns(address[]){
+        return flightSuretyData.getOperationalAirlines();
     }
 
 
